@@ -1,0 +1,78 @@
+/*
+ * Name: George Sayegh
+ * Date: 10/12/2018
+ * Course Number: CSC-220
+ * Course Name: Data Structures
+ * Problem Number: HW4
+ * Email: gsayegh13@gmail.com
+ * TicTacToe
+ *
+ * Be advised that due to a spelling error when I first created the class the name is TicTackToe, with a k being attatched to Tac
+ *
+ */
+
+
+public class TicTackToe {
+
+	private char[][] board;
+	int turns = 0;
+
+	public TicTackToe() {
+		board = new char[3][3];
+		for (int row = 0; row <= 2; row++) {
+			for (int col = 0; col <= 2; col++)
+				board[row][col] = ' ';
+		}
+	}
+
+	public String toString() {
+
+		String output = "";
+
+		for (int row = 0; row <= 2; row++) {
+			for (int col = 0; col <= 2; col++)
+				output += board[row][col];
+			output += "\n";
+		}
+		return output;
+	}
+
+	public boolean isValid(int r, int c) {
+		return r >= 0 && r <= 2 && c >= 0 && c <= 2;
+	}
+
+	public char playerAt(int r, int c) {
+		return board[r][c];
+	}
+
+	public void playMove(char p, int r, int c) {
+		turns++;
+		board[r][c] = p;
+	}
+
+	public boolean isWinner(char c) {
+		return board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] == c || // right to left diagnol
+				board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] == c || // left to right diagnol
+				board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] == c || // top row
+				board[1][0] == board[1][1] && board[1][1] == board[1][2] && board[1][0] == c || // middle row
+				board[2][0] == board[2][1] && board[2][1] == board[2][2] && board[2][0] == c || // bottom row
+				board[0][0] == board[1][0] && board[1][0] == board[2][0] && board[2][0] == c || // left col
+				board[0][1] == board[1][1] && board[2][1] == board[1][1] && board[2][1] == c || // middle col
+				board[0][2] == board[1][2] && board[2][2] == board[0][2] && board[0][2] == c; // right col
+
+	}
+
+	public int getTurns() {
+		return turns;
+	}
+
+	public boolean isFull() {
+
+		return turns == 9;
+	}
+
+	public boolean isTied() {
+		return isFull() && !isWinner('X') && !isWinner('O');
+	}
+
+}
